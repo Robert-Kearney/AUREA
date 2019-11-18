@@ -1,0 +1,75 @@
+function [] = plotStates(S,Offset,Height,Fs,ShowMsgs)
+%PLOTSTATES Plots the sequence of states S
+%	[] = plotStates(S,Offset,Height,Fs,ShowMsgs) plots
+%       the states S in the current axes.
+%
+%   INPUT
+%   S is an N-by-1 vector with the states to be plotted
+%       at each sample.
+%   Offset is a scalar indicating the y-axis offset at
+%       which the states will be plotted (default = 0).
+%   Height is a scalar indicating the height of the
+%       states bar (default = 1).
+%   Fs is a scalar value with the sampling
+%       frequency (default = 50Hz).
+%   ShowMsgs is a flag indicating if messages should
+%       be sent to the standard output (default = false).
+%
+%   OUTPUT
+%   N/A
+%
+%   EXAMPLE
+%   plotStates(S);
+%
+%   VERSION HISTORY
+%   2015_04_29 - Created by: Carlos A. Robles-Rubio (CARR).
+%
+%   REFERENCES
+%   [1] .
+%
+%
+%Copyright (c) 2015-2016, Carlos Alejandro Robles Rubio, Karen A. Brown, and Robert E. Kearney, 
+%McGill University
+%All rights reserved.
+% 
+%Redistribution and use in source and binary forms, with or without modification, are 
+%permitted provided that the following conditions are met:
+% 
+%1. Redistributions of source code must retain the above copyright notice, this list of 
+%   conditions and the following disclaimer.
+% 
+%2. Redistributions in binary form must reproduce the above copyright notice, this list of 
+%   conditions and the following disclaimer in the documentation and/or other materials 
+%   provided with the distribution.
+% 
+%THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+%EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+%MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+%COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+%EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+%SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+%HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR 
+%TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+%SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    deprecate({'plotPatterns'});
+
+    if ~exist('Offset','var') || isempty(Offset)
+        Offset=0;
+    end
+    if ~exist('Height','var') || isempty(Height)
+        Height=1;
+    end
+    if ~exist('Fs','var') || isempty(Fs)
+        Fs=50;
+    end
+    if ~exist('ShowMsgs','var') || isempty(ShowMsgs)
+        ShowMsgs=false;
+    end
+    
+    Segms=signal2events(S);
+    for ixSegm=1:size(Segms,1)
+        colorCode=stateColor(Segms(ixSegm,3));
+        patch([Segms(ixSegm,1) Segms(ixSegm,2) Segms(ixSegm,2) Segms(ixSegm,1)]./Fs,[Offset Offset Offset+Height Offset+Height],colorCode);
+    end
+end
