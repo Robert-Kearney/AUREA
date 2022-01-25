@@ -4,14 +4,14 @@ dirList={'AUREA' 'AureaDemo' 'CardioRespiratory_Analysis'  'CR_Pattern_Scoring' 
 
 P=which('aureaDemo') ;
 nDir=length(dirList)'
-restoredefaultaths
+% restore default paths
 for iDir=1:nDir
     P1=strrep(P,'AureaDemo\aureaDemo.m',dirList{iDir})
     addpath(P1);
 end
 
 %% Load Demo Data 
-loadDemoData
+load DemoData
 %% Compute Metrics 
 Fs=50; % Sample rat for raw data 
 MetricParams=metricParamInit(Fs);
